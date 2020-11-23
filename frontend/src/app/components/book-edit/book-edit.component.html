@@ -1,0 +1,51 @@
+
+<div id="mainContainer">
+    <div *ngIf="book.id; else elseBlock">
+        <p>Edit {{ book.title }}:</p>
+
+    </div>
+    <ng-template #elseBlock><p>Add a new book:</p></ng-template>
+
+    <form>
+        <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput value="{{ book.title }}" [(ngModel)]="form_title" name="form_title">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Category</mat-label>
+            <input matInput value="{{ book.category }}" [(ngModel)]="form_category" name="form_category">
+        </mat-form-field>
+        <br>
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Select main author</mat-label>
+            <mat-select [(value)]="main_author" [(ngModel)]="form_author" name="form_author">
+                <li *ngFor="let author of authors; index as i;">
+                    <mat-option value="{{ author['@id'] }}">{{ author.name }}</mat-option>
+                </li>
+            </mat-select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Select secondary authors</mat-label>
+            <mat-select multiple [(value)]="book_authors" [(ngModel)]="form_authors" name="form_authors">
+                <li *ngFor="let author of authors; index as i;">
+                    <mat-option value="{{ author['@id'] }}">{{ author.name }}</mat-option>
+                </li>
+            </mat-select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Price</mat-label>
+            <input matInput value="{{ book.price }}" [(ngModel)]="form_price" name="form_price">
+        </mat-form-field>
+        <br>
+
+        <button type="button" mat-raised-button color="primary" (click)="handleForm()">Save</button>
+    </form>
+</div>
