@@ -13,12 +13,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { AuthorEditComponent } from './components/author-edit/author-edit.component';
+import { AuthorListComponent } from './components/author-list/author-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BookListComponent,
     BookEditComponent,
+    AuthorEditComponent,
+    AuthorListComponent,
   ],
   imports: [
     BrowserModule,

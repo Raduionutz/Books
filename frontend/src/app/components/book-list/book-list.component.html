@@ -1,9 +1,21 @@
+<div class="mainContainer">
+    <a routerLink="/books" routerLinkActive="active">
+        <button type="button" mat-raised-button color="secondary">
+            Books
+        </button>
+    </a>
 
-<div id="mainContainer">
+    <a routerLink="/authors" routerLinkActive="active">
+        <button type="button" mat-raised-button color="secondary">
+            Authors
+        </button>
+    </a>
+</div>
+<div class="mainContainer">
 
     <a routerLink="/books/create" routerLinkActive="active">
-        <button>
-            Add e new Book!
+        <button type="button" mat-raised-button color="primary">
+            Add a new Book &nbsp;<i class="fa fa-plus"></i>
         </button>
     </a>
     <table mat-table [dataSource]="dataSource">
@@ -33,14 +45,15 @@
         </ng-container>
 
         <ng-container  matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let book">
-            <button  (click)="deleteBook(book['@id'])">
-                delete
+            <button type="button" mat-raised-button color="primary" (click)="deleteBook(book['@id'])">
+                <i class="fa fa-trash"></i>
             </button>
+            &nbsp;
             <a routerLink="/books/edit/{{book.id}}" routerLinkActive="active">
-                <button>
-                    edit
+                <button type="button" mat-raised-button color="primary">
+                    <i class="fa fa-edit"></i>
                 </button>
             </a>
             </mat-cell>
