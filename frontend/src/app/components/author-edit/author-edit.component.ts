@@ -62,14 +62,18 @@ export class AuthorEditComponent implements OnInit {
       secondaryBooks: this.form_secondaryBooks,
     }
 
+    let promise: Promise<any>;
+
     if (this.author.id) {
-      this.authorApiService.putAuthor(this.author.id, body).toPromise().then((data) => {
-        this.router.navigateByUrl('/authors');
-      })
+      promise = this.authorApiService.putAuthor(this.author.id, body).toPromise();
     } else {
-      this.authorApiService.postAuthor(body).toPromise().then((data) => {
-        this.router.navigateByUrl('/authors');
-      })
+      promise = this.authorApiService.postAuthor(body).toPromise();
     }
+
+    promise.then((data: any) => {
+      this.router.navigateByUrl('/authors');
+    }).catch((error: any) => {
+      this.router.navigateByUrl('/authors');
+    });
   }
 }
