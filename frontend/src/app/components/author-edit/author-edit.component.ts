@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BookApiService } from 'src/app/services/book-api.service';
+import { AuthorApiService } from 'src/app/services/author-api.service';
 
 @Component({
   selector: 'app-author-edit',
@@ -7,9 +10,67 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthorEditComponent implements OnInit {
 
-  constructor() { }
+  author = {
+    books: [],
+    secondaryBooks: [],
+    id: '',
+    name: '',
+  };
 
-  ngOnInit(): void {
+  form_secondaryBooks = [];
+  form_name = '';
+
+  books = null;
+  main_books = [];
+  secondaryBooks = [];
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private bookApiService: BookApiService,
+    private authorApiService: AuthorApiService,
+    private router: Router,
+  ) {
   }
 
+  ngOnInit(): void {
+    this.getBooks();
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params.get('id') !== null) {
+        this.authorApiService.getAuthor(params.get('id')).toPromise().then((data: any) => {
+          this.author = data;
+          this.main_books = this.author.books;
+          this.form_name = this.author.name;
+          this.form_secondaryBooks = this.author.secondaryBooks;
+          this.secondaryBooks = this.author.secondaryBooks;
+        }).catch((reason) => {console.log(reason)});
+      }
+    });
+  }
+
+  getBooks(): void {
+    this.bookApiService.getBooks().toPromise().then(
+      (data) => {
+        this.books = data["hydra:member"];
+      })
+  }
+
+  handleForm(): void {
+    let body = {
+      name: this.form_name,
+      books: this.main_books,
+      secondaryBooks: this.form_secondaryBooks,
+    }
+
+    console.log(body);
+
+    if (this.author.id) {
+      this.authorApiService.putAuthor(this.author.id, body).toPromise().then((data) => {
+        this.router.navigateByUrl('/authors');
+      })
+    } else {
+      this.authorApiService.postAuthor(body).toPromise().then((data) => {
+        this.router.navigateByUrl('/authors');
+      })
+    }
+  }
 }

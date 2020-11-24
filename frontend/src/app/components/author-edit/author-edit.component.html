@@ -1,1 +1,42 @@
-<p>author-edit works!</p>
+<div class="mainContainer">
+    <a routerLink="/books" routerLinkActive="active">
+        <button type="button" mat-raised-button color="secondary">
+            Books
+        </button>
+    </a>
+
+    <a routerLink="/authors" routerLinkActive="active">
+        <button type="button" mat-raised-button color="secondary">
+            Authors
+        </button>
+    </a>
+</div>
+
+<div class="mainContainer">
+    <div *ngIf="author.id; else elseBlock">
+        <h3>Edit {{ author.name }}:</h3>
+
+    </div>
+    <ng-template #elseBlock><h3>Add a new Author:</h3></ng-template>
+
+    <form>
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput value="{{ author.name }}" [(ngModel)]="form_name" name="form_name">
+        </mat-form-field>
+        <br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Select secondary Books</mat-label>
+            <mat-select multiple [(value)]="secondaryBooks" [(ngModel)]="form_secondaryBooks" name="form_secondaryBooks">
+                <li *ngFor="let book of books; index as i;">
+                    <mat-option value="{{ book['@id'] }}">{{ book.title }}</mat-option>
+                </li>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <br>
+
+        <button type="button" mat-raised-button color="primary" (click)="handleForm()">Save</button>
+    </form>
+</div>

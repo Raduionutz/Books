@@ -25,10 +25,10 @@ export class AuthorApiService {
   }
 
   putAuthor(authorId: string, authorBody: object): Observable<Object> {
-    return this.http.put(`https://localhost:8443${authorId}`, authorBody);
+    return this.http.put(`https://localhost:8443/authors/${authorId}`, authorBody);
   }
 
   postAuthor(authorBody: object): Observable<Object> {
-    return this.http.put(`https://localhost:8443/authors`, authorBody);
+    return this.http.post(`https://localhost:8443/authors`, authorBody);
   }
 }

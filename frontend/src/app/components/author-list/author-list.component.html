@@ -1,1 +1,66 @@
-<p>author-list works!</p>
+<div class="mainContainer">
+    <a routerLink="/books" routerLinkActive="active">
+        <button type="button" mat-raised-button color="secondary">
+            Books
+        </button>
+    </a>
+
+    <a routerLink="/authors" routerLinkActive="active">
+        <button type="button" mat-raised-button color="secondary">
+            Authors
+        </button>
+    </a>
+</div>
+<div class="mainContainer">
+
+    <a routerLink="/authors/create" routerLinkActive="active">
+        <button type="button" mat-raised-button color="primary">
+            Add a new Author &nbsp;<i class="fa fa-plus"></i>
+        </button>
+    </a>
+    <table mat-table [dataSource]="dataSource">
+
+        <ng-container  matColumnDef="authorName">
+            <mat-header-cell *matHeaderCellDef>Author Name</mat-header-cell>
+            <mat-cell *matCellDef="let author">{{ author.name }}</mat-cell>
+        </ng-container>
+
+        <ng-container  matColumnDef="books">
+            <mat-header-cell *matHeaderCellDef>Books</mat-header-cell>
+            <mat-cell *matCellDef="let author">
+                <p *ngFor="let book of author.books; index as i;">
+                    ({{ this.books[book].title }})&nbsp;
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container  matColumnDef="secondaryBooks">
+            <mat-header-cell *matHeaderCellDef>Books</mat-header-cell>
+            <mat-cell *matCellDef="let author">
+                <p *ngFor="let book of author.secondaryBooks; index as i;">
+                    ({{ this.books[book].title }})&nbsp;
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container  matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let author">
+            <button type="button" mat-raised-button color="primary" (click)="deleteAuthor(author['@id'])">
+                <i class="fa fa-trash"></i>
+            </button>
+            &nbsp;
+            <a routerLink="/authors/edit/{{author.id}}" routerLinkActive="active">
+                <button type="button" mat-raised-button color="primary">
+                    <i class="fa fa-edit"></i>
+                </button>
+            </a>
+            </mat-cell>
+        </ng-container>
+        
+
+        <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+
+    </table>
+</div>

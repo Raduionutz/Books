@@ -59,7 +59,6 @@ export class BookEditComponent implements OnInit {
     this.authorApiService.getAuthors().toPromise().then(
       (data) => {
         this.authors = data["hydra:member"];
-        console.log(this.authors);
       })
   }
 
