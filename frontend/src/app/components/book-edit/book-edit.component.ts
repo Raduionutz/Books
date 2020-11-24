@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookApiService } from 'src/app/services/book-api.service';
 import { AuthorApiService } from 'src/app/services/author-api.service';
 
@@ -33,6 +33,7 @@ export class BookEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private bookApiService: BookApiService,
     private authorApiService: AuthorApiService,
+    private router: Router,
   ) {
   }
 
@@ -44,10 +45,11 @@ export class BookEditComponent implements OnInit {
           this.book = data;
           this.main_author = this.book.mainAuthor;
           this.book_authors = this.book.authors;
-
-          console.log(data);
-          console.log(this.main_author);
-          console.log(this.book_authors)
+          this.form_authors = this.book.authors;
+          this.form_price = this.book.price;
+          this.form_title = this.book.title;
+          this.form_category = this.book.category;
+          this.form_author = this.book.mainAuthor;
         }).catch((reason) => {console.log(reason)});
       }
     });
@@ -62,10 +64,22 @@ export class BookEditComponent implements OnInit {
   }
 
   handleForm(): void {
-    console.log(this.form_authors);
-    console.log(this.form_price);
-    console.log(this.form_title);
-    console.log(this.form_category);
-    console.log(this.form_author);
+    let body = {
+      title: this.form_title,
+      category: this.form_category,
+      price: parseInt(this.form_price),
+      mainAuthor: this.form_author,
+      authors: this.form_authors,
+    }
+
+    if (this.book.id) {
+      this.bookApiService.putBook(this.book.id, body).toPromise().then((data) => {
+        this.router.navigateByUrl('/books');
+      })
+    } else {
+      this.bookApiService.postBook(body).toPromise().then((data) => {
+        this.router.navigateByUrl('/books');
+      })
+    }
   }
 }

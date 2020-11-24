@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookApiService } from 'src/app/services/book-api.service';
+import { AuthorApiService } from 'src/app/services/author-api.service';
 
 @Component({
   selector: 'app-book-list',
@@ -9,19 +10,36 @@ import { BookApiService } from 'src/app/services/book-api.service';
 export class BookListComponent implements OnInit {
 
   dataSource = null;
-  tableColumns  :  string[] = ['bookTitle', 'bookMainAuthor', 'bookPrice', 'actions'];
+  authors = null;
+  tableColumns  :  string[] = ['bookTitle', 'bookMainAuthor', 'bookSecondaryAuthors', 'bookPrice', 'actions'];
 
-  constructor(private bookApiService: BookApiService) {}
+  constructor(
+    private bookApiService: BookApiService,
+    private authorApiService: AuthorApiService,
+  ) {}
 
   ngOnInit(): void {
-    this.getBooks()
+    this.getBooks();
+    this.getAuthors();
   }
 
   getBooks(): void {
     this.bookApiService.getBooks().toPromise().then(
       (data) => {
         this.dataSource = data["hydra:member"];
-        console.log(this.dataSource);
+      })
+  }
+
+  getAuthors(): void {
+    this.authorApiService.getAuthors().toPromise().then(
+      (data) => {
+
+        let reducer = (acc: Object, current: Object): Object => {
+          acc[current['@id']] = current; 
+          return acc
+        }
+
+        this.authors = data["hydra:member"].reduce(reducer, {});
       })
   }
 

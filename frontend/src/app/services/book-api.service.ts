@@ -23,10 +23,11 @@ export class BookApiService {
   }
 
   putBook(bookId: string, bookBody: object): Observable<Object> {
-    return this.http.put(`https://localhost:8443${bookId}`, bookBody);
+    console.log(`https://localhost:8443${bookId}`);
+    return this.http.put(`https://localhost:8443/books/${bookId}`, bookBody);
   }
 
   postBook(bookBody: object): Observable<Object> {
-    return this.http.put(`https://localhost:8443/books`, bookBody);
+    return this.http.post(`https://localhost:8443/books`, bookBody);
   }
 }

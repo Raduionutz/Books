@@ -1,5 +1,11 @@
 
 <div id="mainContainer">
+
+    <a routerLink="/books/create" routerLinkActive="active">
+        <button>
+            Add e new Book!
+        </button>
+    </a>
     <table mat-table [dataSource]="dataSource">
 
         <ng-container  matColumnDef="bookTitle">
@@ -9,7 +15,16 @@
 
         <ng-container  matColumnDef="bookMainAuthor">
             <mat-header-cell *matHeaderCellDef>Author</mat-header-cell>
-            <mat-cell *matCellDef="let book">{{book.mainAuthor}}</mat-cell>
+            <mat-cell *matCellDef="let book">{{ this.authors[book.mainAuthor].name }}</mat-cell>
+        </ng-container>
+
+        <ng-container  matColumnDef="bookSecondaryAuthors">
+            <mat-header-cell *matHeaderCellDef>Secondary Authors</mat-header-cell>
+            <mat-cell *matCellDef="let book">
+                <p *ngFor="let author of book.authors; index as i;">
+                    {{ this.authors[author].name }}&nbsp;
+                </p>
+            </mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="bookPrice">
