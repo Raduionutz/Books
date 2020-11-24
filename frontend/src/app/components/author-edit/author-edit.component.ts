@@ -18,10 +18,10 @@ export class AuthorEditComponent implements OnInit {
   };
 
   form_secondaryBooks = [];
-  form_name = '';
+  form_AuthorName = '';
 
   books = null;
-  main_books = [];
+  mainBooks = [];
   secondaryBooks = [];
 
   constructor(
@@ -38,11 +38,12 @@ export class AuthorEditComponent implements OnInit {
       if (params.get('id') !== null) {
         this.authorApiService.getAuthor(params.get('id')).toPromise().then((data: any) => {
           this.author = data;
-          this.main_books = this.author.books;
-          this.form_name = this.author.name;
-          this.form_secondaryBooks = this.author.secondaryBooks;
+          this.mainBooks = this.author.books;
           this.secondaryBooks = this.author.secondaryBooks;
-        }).catch((reason) => {console.log(reason)});
+
+          this.form_AuthorName = this.author.name;
+          this.form_secondaryBooks = this.author.secondaryBooks;
+        })
       }
     });
   }
@@ -56,12 +57,10 @@ export class AuthorEditComponent implements OnInit {
 
   handleForm(): void {
     let body = {
-      name: this.form_name,
-      books: this.main_books,
+      name: this.form_AuthorName,
+      books: this.mainBooks,
       secondaryBooks: this.form_secondaryBooks,
     }
-
-    console.log(body);
 
     if (this.author.id) {
       this.authorApiService.putAuthor(this.author.id, body).toPromise().then((data) => {

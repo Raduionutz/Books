@@ -26,8 +26,8 @@ export class BookEditComponent implements OnInit {
   form_author = '';
 
   authors = null;
-  main_author = '';
-  book_authors = [];
+  mainAuthor = '';
+  bookAuthors = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,14 +43,15 @@ export class BookEditComponent implements OnInit {
       if (params.get('id') !== null) {
         this.bookApiService.getBook(params.get('id')).toPromise().then((data: any) => {
           this.book = data;
-          this.main_author = this.book.mainAuthor;
-          this.book_authors = this.book.authors;
+          this.mainAuthor = this.book.mainAuthor;
+          this.bookAuthors = this.book.authors;
+
           this.form_authors = this.book.authors;
           this.form_price = this.book.price;
           this.form_title = this.book.title;
           this.form_category = this.book.category;
           this.form_author = this.book.mainAuthor;
-        }).catch((reason) => {console.log(reason)});
+        })
       }
     });
   }

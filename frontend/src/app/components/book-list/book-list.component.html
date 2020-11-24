@@ -22,7 +22,7 @@
 
         <ng-container  matColumnDef="bookTitle">
             <mat-header-cell *matHeaderCellDef>Book Title</mat-header-cell>
-            <mat-cell *matCellDef="let book">{{book.title}}</mat-cell>
+            <mat-cell *matCellDef="let book">{{ book.title }}</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="bookMainAuthor">
@@ -40,8 +40,8 @@
         </ng-container>
 
         <ng-container  matColumnDef="bookPrice">
-            <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-            <mat-cell *matCellDef="let book">{{book.price}}</mat-cell>
+            <mat-header-cell *matHeaderCellDef>Price (RON)</mat-header-cell>
+            <mat-cell *matCellDef="let book">{{ book.price | number : '1.2-2' }}&nbsp;RON</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="actions">
@@ -51,7 +51,7 @@
                 <i class="fa fa-trash"></i>
             </button>
             &nbsp;
-            <a routerLink="/books/edit/{{book.id}}" routerLinkActive="active">
+            <a routerLink="/books/edit/{{ book.id }}" routerLinkActive="active">
                 <button type="button" mat-raised-button color="primary">
                     <i class="fa fa-edit"></i>
                 </button>

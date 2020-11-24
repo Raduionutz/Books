@@ -35,7 +35,7 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Select main author</mat-label>
-            <mat-select [(value)]="main_author" [(ngModel)]="form_author" name="form_author">
+            <mat-select [(value)]="mainAuthor" [(ngModel)]="form_author" name="form_author">
                 <li *ngFor="let author of authors; index as i;">
                     <mat-option value="{{ author['@id'] }}">{{ author.name }}</mat-option>
                 </li>
@@ -45,7 +45,7 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Select secondary authors</mat-label>
-            <mat-select multiple [(value)]="book_authors" [(ngModel)]="form_authors" name="form_authors">
+            <mat-select multiple [(value)]="bookAuthors" [(ngModel)]="form_authors" name="form_authors">
                 <li *ngFor="let author of authors; index as i;">
                     <mat-option value="{{ author['@id'] }}">{{ author.name }}</mat-option>
                 </li>
@@ -54,7 +54,7 @@
         <br>
 
         <mat-form-field appearance="fill">
-            <mat-label>Price</mat-label>
+            <mat-label>Price (RON)</mat-label>
             <input matInput value="{{ book.price }}" [(ngModel)]="form_price" name="form_price">
         </mat-form-field>
         <br>
