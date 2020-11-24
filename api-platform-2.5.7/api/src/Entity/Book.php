@@ -52,7 +52,7 @@ class Book
     /**
      * @var Author
      * @ORM\ManyToOne(targetEntity="Author", inversedBy="books")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $main_author;
 
